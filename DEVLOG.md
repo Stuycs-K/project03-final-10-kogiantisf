@@ -15,7 +15,7 @@ discussed in class. I then added all that I came up with to README, but because 
 ### 2024-01-08 - Wrote proposal, filled out devlog, and started on function organization
 I wrote a rough proposal and touched up the README, which took most of class time (20min). 
 I also wrote this devlog which I forgot to do yesterday. 
-Rest of the time in class was spent on organizing the functions I would be using.
+Rest of the time in class was spent on organizing the functions I would be using (ON PAPER, I'll upload photos later tonight).
 
 
 
