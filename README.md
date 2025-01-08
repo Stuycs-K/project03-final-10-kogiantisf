@@ -9,7 +9,7 @@ Filippos (solo)
 
 Poker simulator
 People can join anytime, and play with whatever money they have in their balance.
-  
+will start with a simpler guessing game, that will have shared board memory, and records of each player's win/losses.
 ### Instructions:
 
 How does the user install/compile/run the program.
