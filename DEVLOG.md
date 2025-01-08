@@ -2,18 +2,23 @@
 
 This document must be updated daily by EACH group member.
 
-## Player 1
-
-### 2024-01-02 - Brief description
-Expanded description including how much time was spent on task.
-
 ### 2024-01-03 - Brief description
 Expanded description including how much time was spent on task.
 
-## Player 2
 
-### 2024-01-02 - Brief description
-Expanded description including how much time was spent on task.
+## Filippos
 
-### 2024-01-03 - Brief description
-Expanded description including how much time was spent on task.
+### 2025-01-07 - Came up with project idea and added info to README. 
+I spent most of the usable time in a period (25min) thinking of a project that would cover most of the topics we
+discussed in class. I then added all that I came up with to README, but because I was doing it on my personal website I forgot to push it. 
+
+### 2024-01-08 - Wrote proposal, filled out devlog, and started on function organization
+I wrote a rough proposal and touched up the README, which took most of class time (20min). 
+I also wrote this devlog which I forgot to do yesterday. 
+Rest of the time in class was spent on organizing the functions I would be using.
+
+
+
+
+
+
