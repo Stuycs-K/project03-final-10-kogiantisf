@@ -13,7 +13,7 @@ starts the 3-way handshake to the server
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 
@@ -29,7 +29,7 @@ displays the any prompts/messages from the server
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 
