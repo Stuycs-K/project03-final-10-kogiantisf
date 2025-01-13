@@ -1,4 +1,4 @@
-#include "server.h"
+#include "pipe_networking.h"
 //UPSTREAM = to the server / from the client
 //DOWNSTREAM = to the client / from the server
 /*=========================
@@ -80,4 +80,3 @@ int server_connect(int from_client) {
   int to_client  = 0;
   return to_client;
 }
-
