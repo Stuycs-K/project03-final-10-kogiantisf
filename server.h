@@ -21,7 +21,7 @@
 #define MESSAGE 3
 #define EXIT 4
 
-int server_setup();
+int create_server();
 /*
 WORKS: NO
 -----------
@@ -35,7 +35,7 @@ creates a semaphore to keep track of connections
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 
@@ -45,13 +45,13 @@ WORKS: NO
 -----------
 DESCRIPTION
 
-host sends information about the game to the player's programs through a pipe
+host sends information about the game to the player's programs through a a private pipe
 
 -----------
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 int read_new_connections();
@@ -65,7 +65,7 @@ likely used in a fork, constantly monitors if any new players have joined - usin
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 int kick_from_game();
@@ -79,7 +79,7 @@ kills the specified process/connection
 RETURN VALUE
 
 -1 if there are issues
-0 if no known errors
+1 if no known errors
 */
 
 #endif
