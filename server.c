@@ -3,8 +3,8 @@
 
 
 int create_server() {
-  FILE * guest_storage = fopen("guest_storage","w");
-  FILE * key_storage = fopen("key_storage","w");
+  FILE * guest_storage = fopen("guest_storage.txt","w");
+  FILE * key_storage = fopen("key_storage.txt","w");
   //for now won't write anything in files, just create them
   int upstream = server_setup();
   fwrite(&upstream,sizeof(int),1,key_storage);
