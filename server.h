@@ -1,25 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <errno.h>
 
-#ifndef
+
+#ifndef SERVER_H
 #define SERVER_H
-#define WKP "poker"
-
-#define HANDSHAKE_BUFFER_SIZE 10
-#define BUFFER_SIZE 1000
-#define MAX_CLIENTS 100
-
-#define SYN 0
-#define SYN_ACK 1
-#define ACK 2
-#define MESSAGE 3
-#define EXIT 4
 
 int create_server();
 /*
@@ -38,6 +20,34 @@ RETURN VALUE
 1 if no known errors
 */
 
+
+
+int signup(char* username,char*password);
+/*
+WORKING: NO
+–––––––––––
+DESCRIPTION/NOTES
+
+adds the new username and password to
+assumes player_info.csv is created
+
+–––––––––––
+ARGUMENTS
+
+char* username
+the username of the player
+(no min/max length)
+
+char* password
+the raw password of the player, as typed
+(no min/max length)
+
+–––––––––––
+RETURN VALUE
+
+1 if added; no issues
+0 if error (check errno) in main run
+*/
 
 int send_data();
 /*
@@ -81,5 +91,16 @@ RETURN VALUE
 -1 if there are issues
 1 if no known errors
 */
+
+struct player{
+  char[64] username;
+  char[64] password;
+  int balance;
+  int highest_balance;
+  int lowest_balance;
+  int hands_won;
+  char[64] last_online;
+  char[64] join_date;
+}
 
 #endif

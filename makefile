@@ -14,7 +14,7 @@ server.o: server.c
 pipe_networking.o: pipe_networking.c
 	gcc -c pipe_networking.c
 clean:
-	rm guest_storage.txt key_storage.txt
+	rm -f guest_storage.txt key_storage.txt create_server start_game *.o
 	
 
 

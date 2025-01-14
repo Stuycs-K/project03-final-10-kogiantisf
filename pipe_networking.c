@@ -1,4 +1,13 @@
 #include "pipe_networking.h"
+
+int err(){
+  printf("err %d\n",errno);
+  printf("%s\n",strerror(errno));
+  exit(1);
+}
+
+
+
 //UPSTREAM = to the server / from the client
 //DOWNSTREAM = to the client / from the server
 /*=========================
@@ -16,7 +25,7 @@ int server_setup() {
   }
   int * data = (int*) malloc(1*sizeof(int));
   from_client = open("./WKP",O_RDONLY);
-  while (*data == NULL){
+  while (*data == 0){
     if(read("./WKP",data,sizeof(int))<0){
       err();
     }
@@ -41,7 +50,7 @@ int server_handshake(int *to_client) {
   if(mkfifo(pp_name,666) < 0){
     err();
   }
-  if (from_client = open(pp_name,O_RDWR)<0){
+  if ((from_client = open(pp_name,O_RDWR))<0){
     err();
   }
   return from_client;
@@ -61,7 +70,7 @@ int client_handshake(int *to_server) {
   int from_server;
   char * pp_name = (char*) malloc(100*sizeof(char));
   sprintf(pp_name,"./%d",getpid());
-  if (from_client = open(pp_name,O_RDWR)<0){
+  if ((from_client = open(pp_name,O_RDWR))<0){
     err();
   }
   return from_server;
