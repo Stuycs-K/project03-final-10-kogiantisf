@@ -72,18 +72,37 @@ int add_player_info(char* usr,char*passwd){
 int login(char* username,char*password){
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
+  char * curr_usr = (char*) malloc(sizeof(char)*64);
+  char * curr_passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_psswd(usr,psswd);
   
-}
-
-char * get_name_password(char * usr, char* pssd,int player_id){
   FILE* player_info;
   player_info = fopen("player_info.dat","r");
   if (player_info == NULL){
     err();
   }
-  fseek(player_id*sizeof(new_player)*1);
-  fread()
+  struct new_player * p = (struct new_player *) malloc (sizeof(new_player)*1);
+  int read_bytes = 1
+  while (read_bytes > 0){
+    read_bytes = fread(p,sizeof(new_player),1,player_info);
+    curr_usr = p->username;
+    curr_passwd = p->password;
+    if (strcmp(usr,curr_usr) && strcmp(psswd,curr_passwd)){
+      return 1;
+    }
+  }
+  return 0;
+  
+  
+  fclose(player_info);
+  free(usr);
+  free(passwd);
+  free(curr_usr);
+  free(curr_passwd);
+}
+
+int get_name_password(char * usr, char* pssd,FILE*player_info){
+  return
 }
 struct stat * get_stat_buffer(char * filepath){
   struct stat * stat_buffer;
