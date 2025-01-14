@@ -21,8 +21,19 @@ RETURN VALUE
 */
 
 
+int sign_in()
 
-int signup(char* username,char*password);
+
+
+
+
+
+
+
+
+
+
+int add_player_info(char* username,char*password);
 /*
 WORKING: NO
 –––––––––––

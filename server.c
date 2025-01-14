@@ -36,8 +36,14 @@ int create_server() {
   return 1;
 }
 
+int sign_in(){
+  char * line_buff = malloc(255);
+  printf("username: ");
+  fgets(line_buff,255,stdin);
+  sscanf(line_buff,"%[^\n]",line_buff);
+}
 
-int signup(char* usr,char*passwd){
+int add_player_info(char* usr,char*passwd){
   FILE* player_info;
   player_info = fopen("player_info.dat","a");
   struct player new_player = malloc(sizeof(struct player)*1);
@@ -45,6 +51,7 @@ int signup(char* usr,char*passwd){
   new_player.password = passwd;
   fwrite(&new_player,sizeof(new_player),1,player_info);
   fclose(player_info);
+  return 1;
 }
 
 int login(char* username,char*password){
