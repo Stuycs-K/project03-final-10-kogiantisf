@@ -2,7 +2,17 @@
 
 #ifndef SERVER_H
 #define SERVER_H
-
+struct player{
+  int player_id;
+  char[64] username;
+  char[64] password;
+  int balance;
+  int highest_balance;
+  int lowest_balance;
+  int hands_won;
+  char[64] last_online;
+  char[64] join_date;
+}
 int create_server();
 /*
 WORKS: NO
@@ -103,15 +113,5 @@ RETURN VALUE
 1 if no known errors
 */
 
-struct player{
-  char[64] username;
-  char[64] password;
-  int balance;
-  int highest_balance;
-  int lowest_balance;
-  int hands_won;
-  char[64] last_online;
-  char[64] join_date;
-}
 
 #endif

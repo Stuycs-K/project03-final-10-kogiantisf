@@ -23,3 +23,20 @@ at home implemented the functions but did not test
 
 ### 2024-01-10 - started describing server/player functions
 In class time created player.c/.h and server.c/.h, described functions and will modify from last lab for handshake
+
+### 2024-01-11 - no work
+
+### 2024-01-12 - looking back at design
+thought some more about the design of the entire server, but didn't code (20min)
+
+### 2024-01-13 - started coding server functions
+wrote makefile
+organized project directory
+pasted and modified functions from pipe server lab
+(whole class period)
+coded some functions for signing in
+fixed bugs and reorganized header files
+(30min)
+
+### 2024-01-14 - coding sign in/login, and server/player data connection
+
