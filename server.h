@@ -4,15 +4,15 @@
 #define SERVER_H
 struct player{
   int player_id;
-  char[64] username;
-  char[64] password;
+  char username[64];
+  char password[64];
   int balance;
   int highest_balance;
   int lowest_balance;
   int hands_won;
-  char[64] last_online;
-  char[64] join_date;
-}
+  char last_online[64];
+  char join_date[64];
+};
 int create_server();
 /*
 WORKS: NO
@@ -31,7 +31,7 @@ RETURN VALUE
 */
 
 
-int sign_in()
+int sign_in();
 
 
 

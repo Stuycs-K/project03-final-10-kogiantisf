@@ -26,7 +26,7 @@ int server_setup() {
   int * data = (int*) malloc(1*sizeof(int));
   from_client = open("./WKP",O_RDONLY);
   while (*data == 0){
-    if(read("./WKP",data,sizeof(int))<0){
+    if(read(from_client,data,sizeof(int))<0){
       err();
     }
   }
@@ -68,6 +68,7 @@ int server_handshake(int *to_client) {
   =========================*/
 int client_handshake(int *to_server) {
   int from_server;
+  int from_client;
   char * pp_name = (char*) malloc(100*sizeof(char));
   sprintf(pp_name,"./%d",getpid());
   if ((from_client = open(pp_name,O_RDWR))<0){
