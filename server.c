@@ -62,24 +62,33 @@ int add_player_info(char* usr,char*passwd){
 
 // returns 0 if exists already, 1 if not
 int sign_in(){
+  printf("signing in!!!\n");
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(usr,passwd);
-  int p = add_player_info(usr,passwd);
-  free(usr);
-  free(passwd);
+  int p = 0;
+  int found = find_player(usr,passwd);
+  printf("found: %d\n",found);
+  if (found == -1){
+    add_player_info(usr,passwd);
+    p = 1;
+  }
+//  free(usr);
+//  free(passwd);
   return p;
 }
 
 // returns 1 if correct creds, 0 if not
 int login(char* username,char*password){
+  printf("logging in!!!\n");
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
 //  char * curr_usr = (char*) malloc(sizeof(char)*64);
 //  char * curr_passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(usr,passwd);
-  
-  if (find_player(usr,passwd) != -1){
+  int found = find_player(usr,passwd);
+  printf("found: %d\n",found);
+  if (found != -1){
     return 1;
   }
   return 0;
@@ -127,6 +136,10 @@ int find_player(char* usr, char*passwd){
     read_bytes = fread(p,sizeof(struct player),1,player_info);
     curr_usr = p->username;
     curr_passwd = p->password;
+    printf("curr_usr: %s\ncurr_passwd: %s\n",curr_usr,curr_passwd);
+    printf("usr: %s\npasswd: %s\n",usr,passwd);
+    printf("usr_cmp: %d\n",strcmp(usr,curr_usr));
+//    printf("comparison%d\n",strcmp(usr,curr_usr) && strcmp(passwd,curr_passwd));
     if (strcmp(usr,curr_usr) && strcmp(passwd,curr_passwd)){
       fclose(player_info);
 //      free(usr);
@@ -137,6 +150,7 @@ int find_player(char* usr, char*passwd){
     }
     i += 1;
   }
+  fclose(player_info);
   return -1;
 }
 
@@ -174,10 +188,10 @@ void open_screen(){
   sscanf(sign_log,"%[^\n]",sign_log);
   int i = 1;
   while (i == 1){
-    if (strcmp(sign_log,"1")){
+    if (strcmp(sign_log,"1") == 0){
       i = sign_in();
     }
-    else if (strcmp(sign_log,"2")){
+    else if (strcmp(sign_log,"2") == 0){
       i = login(usr,passwd);
     }
   }
