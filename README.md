@@ -14,3 +14,5 @@ will start with a simpler guessing game, that will have shared board memory, and
 
 How does the user install/compile/run the program.
 How does the user interact with this program?
+
+team number: 30

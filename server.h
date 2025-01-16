@@ -113,5 +113,21 @@ RETURN VALUE
 1 if no known errors
 */
 
+// returns 0 if exists already, 1 if not
+int sign_in();
+
+// returns 1 if correct creds, 0 if not
+int login(char* username,char*password);
+
+struct stat * get_stat_buffer(char * filepath);
+
+int get_num_players();
+
+//returns index if exists
+//otherwise -1
+int find_player(char* usr, char*passwd);
+
+
+void open_screen();
 
 #endif

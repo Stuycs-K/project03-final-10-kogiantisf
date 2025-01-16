@@ -48,7 +48,7 @@ void ask_usr_passwd(char * usr,char * passwd){
 
 int add_player_info(char* usr,char*passwd){
   FILE* player_info;
-  player_info = fopen("player_info.txt","a");
+  player_info = fopen("player_info.dat","a");
   if (player_info == NULL){
     err();
   }
@@ -60,6 +60,7 @@ int add_player_info(char* usr,char*passwd){
   return 1;
 }
 
+// returns 0 if exists already, 1 if not
 int sign_in(){
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
@@ -70,40 +71,17 @@ int sign_in(){
   return p;
 }
 
+// returns 1 if correct creds, 0 if not
 int login(char* username,char*password){
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
-  char * curr_usr = (char*) malloc(sizeof(char)*64);
-  char * curr_passwd = (char*) malloc(sizeof(char)*64);
+//  char * curr_usr = (char*) malloc(sizeof(char)*64);
+//  char * curr_passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(usr,passwd);
   
-  FILE* player_info;
-  player_info = fopen("player_info.txt","r");
-  if (player_info == NULL){
-    err();
+  if (find_player(usr,passwd) != -1){
+    return 1;
   }
-  struct player * p = (struct player *) malloc (sizeof(struct player)*1);
-  int read_bytes = 1;
-  while (read_bytes > 0){
-    read_bytes = fread(p,sizeof(struct player),1,player_info);
-    curr_usr = p->username;
-    curr_passwd = p->password;
-    if (strcmp(usr,curr_usr) && strcmp(passwd,curr_passwd)){
-      fclose(player_info);
-//      free(usr);
-//      free(passwd);
-//      free(curr_usr);
-//      free(curr_passwd);
-      return 1;
-    }
-  }
-  
-  
-  fclose(player_info);
-//  free(usr);
-//  free(passwd);
-//  free(curr_usr);
-//  free(curr_passwd);
   return 0;
 }
 
@@ -122,7 +100,7 @@ long get_file_size(struct stat * stat_buffer){
 }
 
 int get_num_players(){
-  struct stat * sp = get_stat_buffer("./player_info.txt");
+  struct stat * sp = get_stat_buffer("./player_info.dat");
   int size = get_file_size(sp); //size is the number of bytes +1
   size -= 1;
   return size /  sizeof(struct player);
@@ -130,14 +108,21 @@ int get_num_players(){
 
 //returns index if exists
 //otherwise -1
-int find_player(char* username, char*password){
+int find_player(char* usr, char*passwd){
+  char * curr_usr = (char*) malloc(sizeof(char)*64);
+  char * curr_passwd = (char*) malloc(sizeof(char)*64);
+  
   FILE* player_info;
-  player_info = fopen("player_info.txt","r");
+  player_info = fopen("player_info.dat","r");
   if (player_info == NULL){
     err();
   }
+  
+  
   struct player * p = (struct player *) malloc (sizeof(struct player)*1);
   int read_bytes = 1;
+  
+  int i = 0;
   while (read_bytes > 0){
     read_bytes = fread(p,sizeof(struct player),1,player_info);
     curr_usr = p->username;
@@ -148,9 +133,11 @@ int find_player(char* username, char*password){
 //      free(passwd);
 //      free(curr_usr);
 //      free(curr_passwd);
-      return 1;
+      return i;
     }
+    i += 1;
   }
+  return -1;
 }
 
 /*
@@ -185,13 +172,15 @@ void open_screen(){
   printf("signing up (1) \nOR \nloggin in (2) ?\n");
   fgets(sign_log,64,stdin);
   sscanf(sign_log,"%[^\n]",sign_log);
-  if (strcmp(sign_log,"1")){
-    sign_in();
+  int i = 1;
+  while (i == 1){
+    if (strcmp(sign_log,"1")){
+      i = sign_in();
+    }
+    else if (strcmp(sign_log,"2")){
+      i = login(usr,passwd);
+    }
   }
-  else if (strcmp(sign_log,"2")){
-    login(usr,passwd);
-  }
-  
 }
 
 
