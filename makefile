@@ -14,7 +14,7 @@ server.o: server.c
 pipe_networking.o: pipe_networking.c
 	gcc -c pipe_networking.c
 clean:
-	rm -f guest_storage.dat key_storage.dat create_server start_game *.o
+	rm -f guest_storage.dat key_storage.dat create_server start_game WKP *.o
 	
 
 

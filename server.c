@@ -62,16 +62,21 @@ int add_player_info(char* usr,char*passwd){
 
 // returns 0 if exists already, 1 if not
 int sign_in(){
-  printf("signing in!!!\n");
+  printf("signing in\n");
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(usr,passwd);
   int p = 0;
   int found = find_player(usr,passwd);
-  printf("found: %d\n",found);
+//  printf("found: %d\n",found);
   if (found == -1){
     add_player_info(usr,passwd);
     p = 1;
+    printf("successful sign up\n");
+    
+  }
+  else{
+    printf("user already exists\n");
   }
 //  free(usr);
 //  free(passwd);
@@ -80,16 +85,20 @@ int sign_in(){
 
 // returns 1 if correct creds, 0 if not
 int login(char* username,char*password){
-  printf("logging in!!!\n");
+  printf("logging in\n");
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
 //  char * curr_usr = (char*) malloc(sizeof(char)*64);
 //  char * curr_passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(usr,passwd);
   int found = find_player(usr,passwd);
-  printf("found: %d\n",found);
+//  printf("found: %d\n",found);
   if (found != -1){
+    printf("successful login\n");
     return 1;
+  }
+  else{
+    printf("incorrect username or password");
   }
   return 0;
 }
@@ -136,11 +145,10 @@ int find_player(char* usr, char*passwd){
     read_bytes = fread(p,sizeof(struct player),1,player_info);
     curr_usr = p->username;
     curr_passwd = p->password;
-    printf("curr_usr: %s\ncurr_passwd: %s\n",curr_usr,curr_passwd);
-    printf("usr: %s\npasswd: %s\n",usr,passwd);
-    printf("usr_cmp: %d\n",strcmp(usr,curr_usr));
-//    printf("comparison%d\n",strcmp(usr,curr_usr) && strcmp(passwd,curr_passwd));
-    if (strcmp(usr,curr_usr) && strcmp(passwd,curr_passwd)){
+//    printf("curr_usr: %s\ncurr_passwd: %s\n",curr_usr,curr_passwd);
+//    printf("usr: %s\npasswd: %s\n",usr,passwd);
+//    printf("usr_cmp: %d\n",strcmp(usr,curr_usr));
+    if (strcmp(usr,curr_usr) == 0 && strcmp(passwd,curr_passwd) == 0){
       fclose(player_info);
 //      free(usr);
 //      free(passwd);
@@ -183,11 +191,11 @@ void open_screen(){
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
   char * sign_log = (char*) malloc(sizeof(char)*1);
-  printf("signing up (1) \nOR \nloggin in (2) ?\n");
-  fgets(sign_log,64,stdin);
-  sscanf(sign_log,"%[^\n]",sign_log);
-  int i = 1;
-  while (i == 1){
+  int i = 0;
+  while (i == 0){
+    printf("signing up (1) \nOR \nloggin in (2) ?\n");
+    fgets(sign_log,64,stdin);
+    sscanf(sign_log,"%[^\n]",sign_log);
     if (strcmp(sign_log,"1") == 0){
       i = sign_in();
     }
