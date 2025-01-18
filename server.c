@@ -1,5 +1,6 @@
 #include "server.h"
 #include "pipe_networking.h"
+#include "semaphore.h"
 /*
 WORKING:
 –––––––––––
@@ -26,13 +27,20 @@ int err();
 
 
 int create_server() {
-//  int upstream = server_setup();
   FILE * guest_storage = fopen("guest_storage.dat","w");
   fclose(guest_storage);
   FILE * key_storage = fopen("key_storage.dat","w");
+  fclose(key_storage);
+  
+  create_semaphore();
+  int upstream = server_setup();
+  
+  
+  
   //for now won't write anything in files, just create them
 //  fwrite(&upstream,sizeof(int),1,key_storage);
-  fclose(key_storage);
+//  int upstream = server_setup();
+  printf("%d\n",upstream);
   return 1;
 }
 
@@ -208,7 +216,7 @@ void open_screen(){
 
 int main(){
   create_server();
-  open_screen();
+//  open_screen();
   return 0;
 }
 

@@ -1,4 +1,8 @@
-#ifndef
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+
+#ifndef PLAYER_H
 #define PLAYER_H
 
 int connect_to_server();
@@ -17,7 +21,7 @@ RETURN VALUE
 */
 
 
-int char* display_from_server();
+int display_from_server();
 /*
 WORKS: NO
 -----------
