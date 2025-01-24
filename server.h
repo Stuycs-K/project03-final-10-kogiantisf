@@ -25,4 +25,6 @@ void close_server(int connector_pid);
 
 void open_screen();
 
+int in_lobby(char * pp_name);
+
 #endif

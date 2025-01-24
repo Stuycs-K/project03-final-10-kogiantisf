@@ -119,9 +119,21 @@ int in_list(char * pp,char ** pp_list){
   return 0;
 }
 
-int in_lobby(){
-  FILE * key_storage = fopen("key_storage.dat","r");
-  fclose(key_storage);
+int in_lobby(char * pp_name){
+  struct stored_key *semkey;
+  semkey = get_semaphore("online users semaphore");
+  int val = -1;
+  if (strcmp(semkey->name,"online users semaphore") == 0){
+    int sem_ds = semget(semkey->key,1,0);
+    union semun data;
+    val = semctl(sem_ds,0,GETVAL,data);
+  }else{
+    printf("key not found");
+  }
+  char * message = (char *) calloc(sizeof(char),200);
+  sprintf(message,"%d\n",val);
+  send_only(pp_name,message);
+  return val;
 }
 
 void add_to_list(char * pp,char ** pp_list){
@@ -157,6 +169,11 @@ int main(){
               open_screen(pp);
               add_to_list(pp,logged_pp_list);
               printf("successfully logged in %s\n",pp);
+            }
+            else{
+              printf("online users: \n");
+              in_lobby(pp);
+//              printf("here2\n");
             }
           }
 //          for (int j = 0;j<100;j++){

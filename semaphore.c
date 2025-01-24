@@ -1,53 +1,4 @@
-#include <sys/shm.h>
-#include <sys/ipc.h>
-#include <sys/sem.h>
-#include <sys/types.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <sys/errno.h>
-#include <sys/sem.h>
-
-int err();
-
-int get_line(char * line, FILE * f){ //line is malloced already
-  int r_error = 1; // for inital condition of while loop
-  char char_buff[2]; //initialize char_buff reads one character at a time
-  *(char_buff+1) = '\0'; //make second index null, so its printable
-  int i = 0; //incerement index
-
-  while (r_error == 1){ // if r_error = 1, it is good to read; if r_error = 0, you have reached EOF
-    r_error = fread(char_buff, 1*sizeof(char),1,f); // reads one character, puts into line_buff
-    if (*(char_buff) == '\n'){ // if there is a newline, return just up to (excluding) the newline
-      *(line + i) = '\0'; //add null so it's printable
-      return 0; //breaks from loop and returns value that something was read
-    }
-    else{
-      *(line+i) = *(char_buff); //adds read character to line;
-      i += 1; //increment
-    }
-  }
-  return 1; // at EOF so return must show we wont read anymore, there is no \n plus compiler gets mad
-}
-
-
-void view(){
-  printf("\n");
-  FILE * f;
-  f = fopen("story.txt","r");
-  if (f==NULL){
-    err();
-  }
-  char * line = (char*) malloc(sizeof(char)*100);
-  int error = get_line(line,f);
-  printf("%s\n",line);
-  while (error > 0){
-    error = get_line(line,f);
-    printf("%s\n",line);
-  }
-  free(line);
-  fclose(f);
-}
+#include "semaphore.h"
 
 int * get_random(int length){
   FILE * f = fopen("/dev/random", "r");
@@ -79,9 +30,12 @@ void create_semaphore(){
   printf("semaphore created\n");
 //
 //
+  struct stored_key online_count;
+  online_count.key = *semkey;
+  strcpy(online_count.name,"online users semaphore");
   FILE * f = fopen("key_storage.dat","a");
 //  fwrite(shmkey,sizeof(int),1,f);
-  fwrite(semkey,sizeof(int),1,f);
+  fwrite(&online_count,sizeof(struct stored_key),1,f);
   fclose(f);
   printf("ids/keys written\n");
 
@@ -129,7 +83,26 @@ void rem(){
   printf("shared memory removed\n");
 }
 
+struct stored_key * get_semaphore(char * key_name){
+  
+  FILE * key_storage = fopen("key_storage.dat","r");
+  struct stored_key *semkey;
+  int r = fread(semkey,sizeof(struct stored_key),1,key_storage);
+  while (r > 0 && strcmp(semkey->name,key_name) != 0){
+    fread(semkey,sizeof(struct stored_key),1,key_storage);
+  }
+  printf("%d\n",r);
 
+  fclose(key_storage);
+
+  int val = -1;
+  if (strcmp(semkey->name,key_name) == 0){
+    return semkey;
+  }else{
+    printf("key not found");
+  }
+  return NULL;
+}
 
 
 

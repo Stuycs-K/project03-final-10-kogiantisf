@@ -52,6 +52,12 @@ cleaned functions and fixed warnings and edge-cases (checking if they are alread
 
 ### 2024-01-19 - started working on server connection
 
-### 2024-01-20 - 
+### 2024-01-20 - started working on modifying the handshake lab
 
-### 2024-01-21
+### 2024-01-21 - None
+
+### 2024-01-22 - None
+
+### 2024-01-23 - finished the server/client connection, updated documentation, ensured code could compile
+
+

@@ -12,6 +12,8 @@ int * get_random(int length);
 
 void create_semaphore();
 
+struct stored_key * get_semaphore(char * key_name);
+
 void rem();
 
 #endif

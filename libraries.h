@@ -36,7 +36,7 @@ struct player{
 struct stored_key{
   char name[64];
   int key;
-}
+};
 
 #endif
 
