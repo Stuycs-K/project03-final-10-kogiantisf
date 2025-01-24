@@ -87,8 +87,24 @@ void open_screen(char * pp_name){
 int main(){
   int connector_pid = create_server();
   int game_active = 1;
+  char ** pp_list = (char **) calloc(sizeof(char*),100); //lifetime connections to the server
+  char ** new_pp_list = (char **) calloc(sizeof(char*),100); //newest connections to server
+  char ** disconnected_pp_list = (char **) calloc(sizeof(char*),100); //connections that have exited
+  
   while (game_active == 1){
-    open_screen();
+    for (int i = 0;i<100;i++){
+      char * pp = pp_list[i];
+      if (pp != NULL){
+        for (int j = 0;j<100;j++){
+          if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
+            if (strcmp(pp_list[i],new_pp_list[j]) == 0){ //if the connection is new
+              // up semaphore
+              open_screen(pp);
+            }
+          }
+        }
+      }
+    }
     game_active = 0;
   }
   close_server(connector_pid);
