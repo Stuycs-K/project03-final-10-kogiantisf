@@ -6,9 +6,16 @@
 
 void create_pp(char * pp_name);
 
-void recieve_message(char*pipe_name,char*message);
+int recieve_message(char*pipe_name,char*message);
 
 void send_message(char*pipe_name,char*message);
 
+char * modify_message(char*message,char mode);
+
+void send_only(char*pipe_name,char*message);
+
+void send_recieve(char*pipe_name,char*message);
+
+  
 #endif
 

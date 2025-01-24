@@ -4,13 +4,13 @@
 void ask_usr_passwd(char* pp_name,char * usr,char * passwd){
   char * message = (char *) calloc(sizeof(char),200);
   sprintf(message,"username: ");
-  send_message(pp_name,message);
+  send_recieve(pp_name,message);
   
   recieve_message(pp_name,message);
   strcpy(usr,message);
   
   sprintf(message,"password: ");
-  send_message(pp_name,message);
+  send_recieve(pp_name,message);
   
   recieve_message(pp_name,message);
   strcpy(passwd,message);
@@ -34,7 +34,7 @@ int add_player_info(char* usr,char*passwd){
 int sign_in(char * pp_name){
   char * message = (char *) calloc(sizeof(char),200);
   sprintf(message,"signing in\n");
-  send_message(pp_name,message);
+  send_only(pp_name,message);
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
   ask_usr_passwd(pp_name,usr,passwd);
@@ -50,7 +50,7 @@ int sign_in(char * pp_name){
   else{
     sprintf(message,"user already exists\n");
   }
-  send_message(pp_name,message);
+  send_only(pp_name,message);
 //  free(usr);
 //  free(passwd);
   return p;
@@ -60,7 +60,7 @@ int sign_in(char * pp_name){
 int login(char* pp_name,char* username,char*password){
   char * message = (char *) calloc(sizeof(char),200);
   sprintf(message,"logging in\n");
-  send_message(pp_name,message);
+  send_only(pp_name,message);
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
 //  char * curr_usr = (char*) malloc(sizeof(char)*64);
@@ -70,12 +70,13 @@ int login(char* pp_name,char* username,char*password){
 //  printf("found: %d\n",found);
   if (found != -1){
     sprintf(message,"successful login\n");
-    send_message(pp_name,message);
+    send_only(pp_name,message);
+    
     return 1;
   }
   else{
     sprintf(message,"incorrect username or password");
-    send_message(pp_name,message);
+    send_only(pp_name,message);
   }
   return 0;
 }

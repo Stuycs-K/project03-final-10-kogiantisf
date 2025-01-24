@@ -82,7 +82,7 @@ void open_screen(char * pp_name){
   while (i == 0){
     sprintf(message,"signing up (1) \nOR \nloggin in (2) ?\n");
 //    printf("sending : %s\n",message);
-    send_message(pp_name,message);
+    send_recieve(pp_name,message);
 //    fgets(sign_log,64,stdin);
     recieve_message(pp_name,sign_log);
     sscanf(sign_log,"%[^\n]",sign_log);
