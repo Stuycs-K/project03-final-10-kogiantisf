@@ -52,12 +52,17 @@ cleaned functions and fixed warnings and edge-cases (checking if they are alread
 
 ### 2024-01-19 - started working on server connection
 
-### 2024-01-20 - started working on modifying the handshake lab
-
+### 2024-01-20 - modifyied the handshake lab
+modified and tried to fix the handshake lab
 ### 2024-01-21 - None
 
 ### 2024-01-22 - None
 
 ### 2024-01-23 - finished the server/client connection, updated documentation, ensured code could compile
+wrote the function that is constantly listening for connections (modified from the website)
+modified private pipe functions - function that stored the names of the private pipes, send/recieve messages. 
+Created message format flagging so client knows if a response is needed.
+Wrote the client/server interaction
+Wrote checks for newly logged in players
 
 
