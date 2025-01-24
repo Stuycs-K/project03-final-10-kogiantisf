@@ -14,21 +14,23 @@ void recieve_message(char*pipe_name,char*message){
     err();
   }
   int bytes_read = read(e, message, 200);
+//  printf("%d\n",bytes_read);
   if (bytes_read < 0) {
-    err("no message read\n");
+    printf("no message read\n");
   }
   close(e);
 }
 
 void send_message(char*pipe_name,char*message){
   int e = open(pipe_name,O_WRONLY);
-    if (e < 0){
-      err();
-    }
-    int i = 0;
-    while (*(message+i) != '\0'){
-      write(e,(message+i),1);
-      i += 1;
-    }
-    close(e);
+  if (e < 0){
+    err();
+  }
+  int i = 0;
+//  while (*(message+i) != '\0'){
+  int bytes_written = write(e,(message+i),200);
+//  printf("%d\n",bytes_written);
+//    i += 1;
+//  }
+  close(e);
 }

@@ -81,22 +81,23 @@ void open_screen(char * pp_name){
   int i = 0;
   while (i == 0){
     sprintf(message,"signing up (1) \nOR \nloggin in (2) ?\n");
+//    printf("sending : %s\n",message);
     send_message(pp_name,message);
 //    fgets(sign_log,64,stdin);
     recieve_message(pp_name,sign_log);
     sscanf(sign_log,"%[^\n]",sign_log);
     if (strcmp(sign_log,"1") == 0){
-      i = sign_in();
+      i = sign_in(pp_name);
     }
     else if (strcmp(sign_log,"2") == 0){
-      i = login(usr,passwd);
+      i = login(pp_name,usr,passwd);
     }
   }
 }
 
 int read_close(){ //if server terminal types close then server shuts down
   printf("type (close) to shut down server\n");
-  char * message = (char *) calloc(sizeof(char),100);
+  char * message = (char *) calloc(sizeof(char),200);
   fgets(message,64,stdin);
   sscanf(message,"%[^\n]",message);
   if (strcmp(message,"close") == 0){

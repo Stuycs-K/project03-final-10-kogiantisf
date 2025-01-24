@@ -1,13 +1,19 @@
 #include "logins.h"
+#include "pipe_networking.h"
 
-void ask_usr_passwd(char * usr,char * passwd){
-  printf("username: ");
-  fgets(usr,64,stdin);
-  sscanf(usr,"%[^\n]",usr);
+void ask_usr_passwd(char* pp_name,char * usr,char * passwd){
+  char * message = (char *) calloc(sizeof(char),200);
+  sprintf(message,"username: ");
+  send_message(pp_name,message);
   
-  printf("password: ");
-  fgets(passwd,64,stdin);
-  sscanf(passwd,"%[^\n]",passwd);
+  recieve_message(pp_name,message);
+  strcpy(usr,message);
+  
+  sprintf(message,"password: ");
+  send_message(pp_name,message);
+  
+  recieve_message(pp_name,message);
+  strcpy(passwd,message);
 }
 
 int add_player_info(char* usr,char*passwd){
@@ -25,44 +31,51 @@ int add_player_info(char* usr,char*passwd){
 }
 
 // returns 0 if exists already, 1 if not
-int sign_in(){
-  printf("signing in\n");
+int sign_in(char * pp_name){
+  char * message = (char *) calloc(sizeof(char),200);
+  sprintf(message,"signing in\n");
+  send_message(pp_name,message);
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
-  ask_usr_passwd(usr,passwd);
+  ask_usr_passwd(pp_name,usr,passwd);
   int p = 0;
   int found = find_player(usr,passwd);
 //  printf("found: %d\n",found);
   if (found == -1){
     add_player_info(usr,passwd);
     p = 1;
-    printf("successful sign up\n");
+    sprintf(message,"successful sign up\n");
     
   }
   else{
-    printf("user already exists\n");
+    sprintf(message,"user already exists\n");
   }
+  send_message(pp_name,message);
 //  free(usr);
 //  free(passwd);
   return p;
 }
 
 // returns 1 if correct creds, 0 if not
-int login(char* username,char*password){
-  printf("logging in\n");
+int login(char* pp_name,char* username,char*password){
+  char * message = (char *) calloc(sizeof(char),200);
+  sprintf(message,"logging in\n");
+  send_message(pp_name,message);
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
 //  char * curr_usr = (char*) malloc(sizeof(char)*64);
 //  char * curr_passwd = (char*) malloc(sizeof(char)*64);
-  ask_usr_passwd(usr,passwd);
+  ask_usr_passwd(pp_name,usr,passwd);
   int found = find_player(usr,passwd);
 //  printf("found: %d\n",found);
   if (found != -1){
-    printf("successful login\n");
+    sprintf(message,"successful login\n");
+    send_message(pp_name,message);
     return 1;
   }
   else{
-    printf("incorrect username or password");
+    sprintf(message,"incorrect username or password");
+    send_message(pp_name,message);
   }
   return 0;
 }

@@ -3,13 +3,13 @@
 #ifndef LOGINS_H
 #define LOGINS_H
 
-void ask_usr_passwd(char * usr,char * passwd);
+void ask_usr_passwd(char * pp_name,char * usr,char * passwd);
 
 int add_player_info(char* usr,char*passwd);
 
-int sign_in();
+int sign_in(char * pp_name);
 
-int login(char* username,char*password);
+int login(char * pp_name,char* username,char*password);
 
 struct stat * get_stat_buffer(char * filepath);
 
