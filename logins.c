@@ -3,13 +3,13 @@
 
 void ask_usr_passwd(char* pp_name,char * usr,char * passwd){
   char * message = (char *) calloc(sizeof(char),200);
-  sprintf(message,"username: ");
+  sprintf(message,"username:\n");
   send_recieve(pp_name,message);
   
   recieve_message(pp_name,message);
   strcpy(usr,message);
   
-  sprintf(message,"password: ");
+  sprintf(message,"password:\n");
   send_recieve(pp_name,message);
   
   recieve_message(pp_name,message);

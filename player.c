@@ -20,10 +20,10 @@ int main(){
   
   char * message = (char *) calloc(sizeof(char),200);
   while (1){
-    printf("waiting for message\n");
+//    printf("waiting for message\n");
     int r = recieve_message(pp_name,message);
-    printf("%s\n",message);
-    printf("%d\n",r);
+    printf("%s",message);
+//    printf("%d\n",r);
     if (r == 1){ // if a response is wanted
       fgets(message,64,stdin);
       sscanf(message,"%[^\n]",message);

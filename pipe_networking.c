@@ -60,6 +60,6 @@ void send_message(char*pipe_name,char*message){
 //  printf("%d\n",bytes_written);
 //    i += 1;
 //  }
-  printf("sending : %s\n",message);
+//  printf("sending : %s\n",message);
   close(e);
 }

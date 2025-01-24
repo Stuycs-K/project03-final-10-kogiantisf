@@ -33,5 +33,10 @@ struct player{
   char join_date[64];
 };
 
+struct stored_key{
+  char name[64];
+  int key;
+}
+
 #endif
 

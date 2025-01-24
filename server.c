@@ -119,6 +119,11 @@ int in_list(char * pp,char ** pp_list){
   return 0;
 }
 
+int in_lobby(){
+  FILE * key_storage = fopen("key_storage.dat","r");
+  fclose(key_storage);
+}
+
 void add_to_list(char * pp,char ** pp_list){
   int i = 0;
   char * p = pp_list[i];
@@ -153,7 +158,6 @@ int main(){
               add_to_list(pp,logged_pp_list);
               printf("successfully logged in %s\n",pp);
             }
-            
           }
 //          for (int j = 0;j<100;j++){
 //            if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
