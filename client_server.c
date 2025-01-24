@@ -69,12 +69,12 @@ int listen_to_connections(){
 
       //read the whole buff
       read(client_socket,buff, sizeof(buff));
-      //trim the string
-      buff[strlen(buff)-1]=0; //clear newline
-      if(buff[strlen(buff)-1]==13){
-          //clear windows line ending
-          buff[strlen(buff)-1]=0;
-      }
+//      //trim the string
+//      buff[strlen(buff)-1]=0; //clear newline
+//      if(buff[strlen(buff)-1]==13){
+//          //clear windows line ending
+//          buff[strlen(buff)-1]=0;
+//      }
       
       
       printf("\nRecieved from client '%s'\n",buff); //these will be private pipe names
