@@ -41,6 +41,7 @@ int create_server(){
     fclose(pp_list);
     
     create_semaphore();
+    printf("server created\n");
   }
   
   
@@ -93,36 +94,86 @@ void open_screen(char * pp_name){
   }
 }
 
+int read_close(){ //if server terminal types close then server shuts down
+  printf("type (close) to shut down server\n");
+  char * message = (char *) calloc(sizeof(char),100);
+  fgets(message,64,stdin);
+  sscanf(message,"%[^\n]",message);
+  if (strcmp(message,"close") == 0){
+    return 0;
+  }
+  return 1;
+}
 
-
-
-
-int main(){
-  int connector_pid = create_server();
-  int game_active = 1;
-  char ** pp_list = (char **) calloc(sizeof(char*),100); //lifetime connections to the server
-  char ** new_pp_list = (char **) calloc(sizeof(char*),100); //newest connections to server
-  char ** disconnected_pp_list = (char **) calloc(sizeof(char*),100); //connections that have exited
-  
-  while (game_active == 1){
-    pp_list = get_private_pipes();
-    for (int i = 0;i<100;i++){
-      char * pp = pp_list[i];
-      if (pp != NULL){
-        printf("%s\n",pp);
-        game_active = 0;
-//        for (int j = 0;j<100;j++){
-//          if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
-//            if (strcmp(pp_list[i],new_pp_list[j]) == 0){ //if the connection is new
-//              // up semaphore
-//              open_screen(pp);
-//            }
-//          }
-//        }
+//if 1, found. if 0, not found
+int in_list(char * pp,char ** pp_list){
+  for (int i = 0;i<100;i++){
+    char * p = pp_list[i];
+    if (p != NULL){
+      if (strcmp(pp,p) == 0){
+        return 1;
       }
     }
   }
-  close_server(connector_pid);
+  return 0;
+}
+
+void add_to_list(char * pp,char ** pp_list){
+  int i = 0;
+  char * p = pp_list[i];
+  while (p != NULL){
+    p = pp_list[i];
+    i += 1;
+  }
+  pp_list[i] = pp;
+}
+
+int main(){
+  int connector_pid = create_server();
+  int f = fork();
+  if (f == 0){
+    char ** pp_list = (char **) calloc(sizeof(char*),100); //lifetime connections to the server
+    char ** logged_pp_list = (char **) calloc(sizeof(char*),100); //pipes that have logged in
+    char ** disconnected_pp_list = (char **) calloc(sizeof(char*),100); //connections that have exited
+    
+    logged_pp_list = get_private_pipes();
+    disconnected_pp_list = get_private_pipes();
+    while (1){
+      pp_list = get_private_pipes();
+      for (int i = 0;i<100;i++){
+        char * pp = pp_list[i];
+        if (pp != NULL){
+//          printf("%s\n",pp);
+//          printf("%d\n",in_list(pp,disconnected_pp_list));
+          if (in_list(pp,disconnected_pp_list) == 0){
+            if (in_list(pp,logged_pp_list) == 0){
+              printf("logging in %s\n",pp);
+              open_screen(pp);
+              add_to_list(pp,logged_pp_list);
+              printf("successfully logged in %s\n",pp);
+            }
+            
+          }
+//          for (int j = 0;j<100;j++){
+//            if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
+//              if (strcmp(pp_list[i],unlogged_pp_list[j]) != 0){ //if the connection is new, user hasn't logged in yet
+//                // up semaphore
+//                open_screen(pp);
+//              }
+//            }
+//          }
+        }
+      }
+    }
+  }
+  else{
+    int game_active = 1;
+    while (game_active == 1){
+      game_active = read_close();
+    }
+    kill(f, SIGKILL);
+    close_server(connector_pid);
+  }
   return 0;
 }
 

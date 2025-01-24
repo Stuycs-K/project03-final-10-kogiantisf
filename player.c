@@ -11,7 +11,7 @@ int connect_to_server(char * pp_name){
 
 
 int main(){
-  char * pp_name = (char *) calloc(sizeof(char),10);
+  char * pp_name = (char *) calloc(sizeof(char),20);
   sprintf(pp_name, "./%d_pipe", getpid());
   
   create_pp(pp_name); //creates private pipe

@@ -9,7 +9,7 @@ void create_pp(char * pp_name){
 }
 
 void recieve_message(char*pipe_name,char*message){
-  int e = open(pipe_name,O_RDONLY);
+  int e = open(pipe_name,O_RDWR);
   if (e < 0){
     err();
   }
@@ -22,7 +22,7 @@ void recieve_message(char*pipe_name,char*message){
 }
 
 void send_message(char*pipe_name,char*message){
-  int e = open(pipe_name,O_WRONLY);
+  int e = open(pipe_name,O_RDWR);
     if (e < 0){
       err();
     }
