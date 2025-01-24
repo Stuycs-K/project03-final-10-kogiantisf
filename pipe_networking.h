@@ -2,31 +2,13 @@
 
 #ifndef NETWORKING_H
 #define NETWORKING_H
-#define WKP "mario"
-
-#define HANDSHAKE_BUFFER_SIZE 10
-#define BUFFER_SIZE 1000
-#define MAX_CLIENTS 100
-
-#define SYN 0
-#define SYN_ACK 1
-#define ACK 2
-#define MESSAGE 3
-#define EXIT 4
 
 
-int server_handshake(int *to_client);
-int client_handshake(int *to_server);
+void create_pp(int client_pid);
 
-//for basic & persistent servers
-int server_connect(int from_client);
+int recieve_message(char*pipe_name,char*message);
 
-//for forking server
-int server_setup();
-
-//multi_server
-//int multi_server_setup();
-//int multi_server_connect(int from_client, struct message m);
+int send_message(char*pipe_name,char*message);
 
 #endif
 

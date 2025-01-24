@@ -1,7 +1,7 @@
 #include "client_server.h"
 
-
-int listen_to_connections(){
+int listen_to_connections(int max_connections){
+  char ** pid_list = (char **) calloc(sizeof(char*),max_connections);// max # of players is passed
   struct addrinfo * hints, * results;
   hints = calloc(1,sizeof(struct addrinfo));
   char* PORT = "9998";
@@ -45,6 +45,7 @@ int listen_to_connections(){
   char buff[1025]="";
   int address_ind = 0;
   
+  int pid_index = 0;
   while(1){ //while server is active
     struct sockaddr_storage client_address;
     FD_ZERO(&read_fds);
@@ -53,11 +54,11 @@ int listen_to_connections(){
     int i = select(listen_socket+1, &read_fds, NULL, NULL, NULL);
 
     //if standard in, use fgets
-    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
-        fgets(buff, sizeof(buff), stdin);
-        buff[strlen(buff)-1]=0;
-        printf("Recieved from terminal: '%s'\n",buff);
-    }
+//    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+//        fgets(buff, sizeof(buff), stdin);
+//        buff[strlen(buff)-1]=0;
+//        printf("Recieved from terminal: '%s'\n",buff);
+//    }
 
     // if socket
     if (FD_ISSET(listen_socket, &read_fds)) {
@@ -73,8 +74,13 @@ int listen_to_connections(){
           //clear windows line ending
           buff[strlen(buff)-1]=0;
       }
-
+      
+      
       printf("\nRecieved from client '%s'\n",buff); //these will be private pipe names
+      
+      strcpy(pid_list[pid_index],buff);
+      pid_index += 1;
+      
       client_addresses[address_ind] = client_address;
       address_ind += 1;
       
@@ -137,6 +143,6 @@ int send_pp_name(char * pp_name){
   printf("connection closed\n");
   
   free(hints);
-  return 0;
+  return ;
 }
 

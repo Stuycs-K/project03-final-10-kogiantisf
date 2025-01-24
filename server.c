@@ -53,7 +53,6 @@ int close_server(int connector_pid){
   remove("guest_storage.dat");
   remove("key_storage.dat");
   kill(connector_pid, SIGKILL); //kills the loop waiting for connections
-  
 }
 
 
@@ -61,13 +60,15 @@ int close_server(int connector_pid){
 
 
 
-void open_screen(){
-  char * usr = (char*) malloc(sizeof(char)*64);
-  char * passwd = (char*) malloc(sizeof(char)*64);
-  char * sign_log = (char*) malloc(sizeof(char)*1);
+void open_screen(char * pp_name){
+  char * usr = (char*) calloc(sizeof(char),64);
+  char * passwd = (char*) calloc(sizeof(char),64);
+  char * sign_log = (char*) calloc(sizeof(char),1);
+  char * message = (char*) calloc(sizeof(char),200);
   int i = 0;
   while (i == 0){
-    printf("signing up (1) \nOR \nloggin in (2) ?\n");
+    sprintf(message,"signing up (1) \nOR \nloggin in (2) ?\n");
+    send_message()
     fgets(sign_log,64,stdin);
     sscanf(sign_log,"%[^\n]",sign_log);
     if (strcmp(sign_log,"1") == 0){

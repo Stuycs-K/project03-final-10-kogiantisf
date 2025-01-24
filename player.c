@@ -10,8 +10,8 @@ int connect_to_server(){
   return 0;
 }
 
+
 int main(){
   connect_to_server();
-  printf("sent pp\n");
   return 0;
 }
