@@ -55,8 +55,16 @@ int create_server(){
 void close_server(int connector_pid){
   remove("guest_storage.dat");
   remove("key_storage.dat");
-  remove("open_connections.txt");
   kill(connector_pid, SIGKILL); //kills the loop waiting for connections
+  char ** pp_list = (char **) calloc(sizeof(char*),100);
+  pp_list = get_private_pipes();
+  for (int i = 0;i<100;i++){
+    char * pp = pp_list[i];
+    if (pp != NULL){
+      remove(pp);
+    }
+  }
+  remove("open_connections.txt");
 }
 
 

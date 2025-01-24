@@ -4,7 +4,7 @@
 #define NETWORKING_H
 
 
-void create_pp(int client_pid);
+void create_pp(char * pp_name);
 
 void recieve_message(char*pipe_name,char*message);
 

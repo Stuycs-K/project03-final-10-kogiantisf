@@ -1,10 +1,9 @@
 #include "pipe_networking.h"
 
 //creates private pipe
-void create_pp(int client_pid){
-  char * pp_name = (char*) malloc(10*sizeof(char));
-  sprintf(pp_name,"./%d",client_pid);
-  if(mkfifo(pp_name,666) < 0){
+void create_pp(char * pp_name){
+  umask(0000);
+  if(mkfifo(pp_name,0666) < 0){
     err();
   }
 }

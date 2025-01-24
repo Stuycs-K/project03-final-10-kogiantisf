@@ -1,4 +1,4 @@
-DEFAULT: clean compile_server start_server
+DEFAULT: clean start_player clean
 start_server: create_server
 	./create_server
 start_player: start_game

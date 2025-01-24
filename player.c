@@ -12,11 +12,15 @@ int connect_to_server(char * pp_name){
 
 int main(){
   char * pp_name = (char *) calloc(sizeof(char),10);
-  sprintf(pp_name, "./%d", getpid());
+  sprintf(pp_name, "./%d_pipe", getpid());
+  
+  create_pp(pp_name); //creates private pipe
+  
   connect_to_server(pp_name);
+  
   char * message = (char *) calloc(sizeof(char),200);
   while (1){
-    printf("waiting for message\n")
+    printf("waiting for message\n");
     recieve_message(pp_name,message);
     printf("%s\n",message);
     fgets(message,64,stdin);
