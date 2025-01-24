@@ -40,4 +40,18 @@ fixed bugs and reorganized header files
 
 ### 2024-01-14 - coding sign in/login, and server/player data connection
 
+### 2024-01-15
 
+### 2024-01-16
+
+### 2024-01-17 - finished log in system
+
+
+### 2024-01-18 - finished all bugs in sign in method
+cleaned functions and fixed warnings and edge-cases (checking if they are already in the database)
+
+### 2024-01-19 - started working on server connection
+
+### 2024-01-20 - 
+
+### 2024-01-21

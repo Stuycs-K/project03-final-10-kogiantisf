@@ -1,11 +1,5 @@
 #include "pipe_networking.h"
 
-int err(){
-  printf("err %d\n",errno);
-  printf("%s\n",strerror(errno));
-  exit(1);
-}
-
 
 
 //UPSTREAM = to the server / from the client
@@ -18,30 +12,30 @@ int err(){
 
   returns the file descriptor for the upstream pipe.
   =========================*/
-int server_setup() {
-  int from_client = 0;
-  umask(0000);
-  if(mkfifo("./public_pipe",0666) < 0){
-    err();
-  }
-//  chmod("./public_pipe",666);
-//  printf("made it\n");
-  int * data = (int*) malloc(1*sizeof(int));
-//  printf("made it\n");
-  printf("waiting for connections\n");
-  from_client = open("./public_pipe",O_RDONLY);
-//  printf("made it\n");
-  if(from_client < 0){
-    err();
-  }
-  while (*data == 0){
-    if(read(from_client,data,sizeof(int))<0){
-      err();
-    }
-  }
-  close(from_client);
-  return from_client;
-}
+//int server_setup() {
+//  int from_client = 0;
+//  umask(0000);
+//  if(mkfifo("./public_pipe",0666) < 0){
+//    err();
+//  }
+////  chmod("./public_pipe",666);
+////  printf("made it\n");
+//  int * data = (int*) malloc(1*sizeof(int));
+////  printf("made it\n");
+//  printf("waiting for connections\n");
+//  from_client = open("./public_pipe",O_RDONLY);
+////  printf("made it\n");
+//  if(from_client < 0){
+//    err();
+//  }
+//  while (*data == 0){
+//    if(read(from_client,data,sizeof(int))<0){
+//      err();
+//    }
+//  }
+//  close(from_client);
+//  return from_client;
+//}
 
 /*=========================
   server_handshake

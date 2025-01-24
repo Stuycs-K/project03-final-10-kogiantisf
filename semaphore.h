@@ -1,12 +1,4 @@
-#include <sys/shm.h>
-#include <sys/ipc.h>
-#include <sys/sem.h>
-#include <sys/types.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <sys/errno.h>
-#include <sys/sem.h>
+#include "libraries.h"
 
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
