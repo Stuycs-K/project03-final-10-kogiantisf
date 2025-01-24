@@ -15,12 +15,13 @@ int main(){
   sprintf(pp_name, "./%d", getpid());
   connect_to_server(pp_name);
   char * message = (char *) calloc(sizeof(char),200);
-//  while (1){
-//    recieve_message(pp_name,message);
-//    printf(message);
-//    fgets(message,64,stdin);
-//    sscanf(message,"%[^\n]",message);
-//    send_message(pp_name,message);
-//  }
+  while (1){
+    printf("waiting for message\n")
+    recieve_message(pp_name,message);
+    printf("%s\n",message);
+    fgets(message,64,stdin);
+    sscanf(message,"%[^\n]",message);
+    send_message(pp_name,message);
+  }
   return 0;
 }

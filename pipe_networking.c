@@ -9,7 +9,7 @@ void create_pp(int client_pid){
   }
 }
 
-int recieve_message(char*pipe_name,char*message){
+void recieve_message(char*pipe_name,char*message){
   int e = open(pipe_name,O_RDONLY);
   if (e < 0){
     err();
@@ -20,10 +20,9 @@ int recieve_message(char*pipe_name,char*message){
     i += 1;
   }
   close(e);
-  return 0;
 }
 
-int send_message(char*pipe_name,char*message){
+void send_message(char*pipe_name,char*message){
   int e = open(pipe_name,O_WRONLY);
     if (e < 0){
       err();

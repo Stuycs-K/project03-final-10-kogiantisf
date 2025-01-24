@@ -1,4 +1,4 @@
-#define NULL 0
+//#define NULL 0
 
 #ifndef LIBRARIES_H
 #define LIBRARIES_H

@@ -1,7 +1,7 @@
 #include "client_server.h"
 
-int listen_to_connections(int max_connections){
-  char ** pid_list = (char **) calloc(sizeof(char*),max_connections);// max # of players is passed
+int listen_to_connections(){
+  char * pp_name = (char *) calloc(sizeof(char*),20);
   struct addrinfo * hints, * results;
   hints = calloc(1,sizeof(struct addrinfo));
   char* PORT = "9998";
@@ -32,6 +32,7 @@ int listen_to_connections(int max_connections){
 
   listen(listen_socket, 3);//3 clients can wait to be processed
   printf("Listening on port %s\n",PORT);
+//  printf("TEST\n");
 
   socklen_t sock_size;
   
@@ -78,9 +79,11 @@ int listen_to_connections(int max_connections){
       
       printf("\nRecieved from client '%s'\n",buff); //these will be private pipe names
       
-      strcpy(pid_list[pid_index],buff);
-      pid_index += 1;
+//      strcpy(pp_name,buff);
+//      pid_index += 1;
+      printf("writing pp_name: %s\n",buff);
       store_private_pipe(buff);
+      printf("wrote pp_name\n");
       
       client_addresses[address_ind] = client_address;
       address_ind += 1;
@@ -153,30 +156,42 @@ int send_pp_name(char * pp_name){
 }
 
 void store_private_pipe(char* pp_name){
-  FILE * f = fopen("open_connections.dat","a");
+  FILE * f = fopen("open_connections.txt","a");
   fwrite(pp_name,strlen(pp_name),1,f);
+  printf("pp_name written\n");
   fwrite("\n",sizeof(char),1,f);
   fclose(f);
+}
+
+char * read_line(FILE * f){
+  char * line = calloc(sizeof(char),100);
+  char * buff = (char *) calloc(sizeof(char),2);
+  
+  int i = 0;
+  int bytes_read = fread(buff,sizeof(char),1,f);
+  while (bytes_read > 0 && strcmp(buff,"\n") != 0){
+    line[i] = buff[0];
+    i += 1;
+    bytes_read = fread(buff,sizeof(char),1,f);
+  }
+  return line;
 }
 
 char ** get_private_pipes(){
   char ** pp_list = (char **) calloc(sizeof(char*),100);
   char * pp_name = (char *) calloc(sizeof(char),20);
   
-  FILE * f = fopen("open_connections.dat","r");
-  char * buff = (char *) calloc(sizeof(char),2);
-  int bytes_read;
-  
-  bytes_read = fread(buff,sizeof(char),1,f);
+  FILE * f = fopen("open_connections.txt","r");
   int pp_index = 0;
-  while (bytes_read != 0){
-    int i = 0;
-    while (bytes_read != 0 && strcmp(buff,"\n") != 0){
-      pp_name[i] = buff[0];
-      i += 1;
-    }
-    pp_list[pp_index] = pp_name;
+  pp_name = read_line(f);
+  while (pp_name[0] != '\0'){
+//    printf("%s",pp_name);
+    pp_list[pp_index] = (char *) calloc(sizeof(char),20);
+    strcpy(pp_list[pp_index],pp_name);
+    pp_index += 1;
+    pp_name = read_line(f);
   }
   fclose(f);
+//  printf("%s",pp_name);
   return pp_list;
 }

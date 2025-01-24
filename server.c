@@ -30,14 +30,14 @@ RETURN VALUE
 int create_server(){
   int f = fork();
   if (f == 0){
-    listen_to_connections();
+    listen_to_connections(10);
   }
   else{
     FILE * guest_storage = fopen("guest_storage.dat","w");
     fclose(guest_storage);
     FILE * key_storage = fopen("key_storage.dat","w");
     fclose(key_storage);
-    FILE * pp_list = fopen("open_connections.dat","w");
+    FILE * pp_list = fopen("open_connections.txt","w");
     fclose(pp_list);
     
     create_semaphore();
@@ -52,9 +52,10 @@ int create_server(){
   return f;
 }
 
-int close_server(int connector_pid){
+void close_server(int connector_pid){
   remove("guest_storage.dat");
   remove("key_storage.dat");
+  remove("open_connections.txt");
   kill(connector_pid, SIGKILL); //kills the loop waiting for connections
 }
 
