@@ -38,5 +38,12 @@ struct stored_key{
   int key;
 };
 
+union semun {
+  int val;                  //used for SETVAL
+  struct semid_ds *buf;     //used for IPC_STAT and IPC_SET
+  unsigned short  *array;   //used for SETALL
+  struct seminfo  *__buf;
+};
+
 #endif
 
