@@ -37,6 +37,7 @@ int sign_in(char * pp_name){
   send_only(pp_name,message);
   char * usr = (char*) malloc(sizeof(char)*64);
   char * passwd = (char*) malloc(sizeof(char)*64);
+  
   ask_usr_passwd(pp_name,usr,passwd);
   int p = 0;
   int found = find_player(usr,passwd);

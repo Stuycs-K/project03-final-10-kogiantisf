@@ -23,10 +23,11 @@ int main(){
     printf("waiting for message\n");
     int r = recieve_message(pp_name,message);
     printf("%s\n",message);
+    printf("%d\n",r);
     if (r == 1){ // if a response is wanted
       fgets(message,64,stdin);
       sscanf(message,"%[^\n]",message);
-      send_message(pp_name,message);
+      send_only(pp_name,message);
     }
   }
   return 0;
