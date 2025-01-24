@@ -37,6 +37,9 @@ int create_server(){
     fclose(guest_storage);
     FILE * key_storage = fopen("key_storage.dat","w");
     fclose(key_storage);
+    FILE * pp_list = fopen("open_connections.dat","w");
+    fclose(pp_list);
+    
     create_semaphore();
   }
   
@@ -68,8 +71,9 @@ void open_screen(char * pp_name){
   int i = 0;
   while (i == 0){
     sprintf(message,"signing up (1) \nOR \nloggin in (2) ?\n");
-    send_message()
-    fgets(sign_log,64,stdin);
+    send_message(pp_name,message);
+//    fgets(sign_log,64,stdin);
+    recieve_message(pp_name,sign_log);
     sscanf(sign_log,"%[^\n]",sign_log);
     if (strcmp(sign_log,"1") == 0){
       i = sign_in();
@@ -92,20 +96,22 @@ int main(){
   char ** disconnected_pp_list = (char **) calloc(sizeof(char*),100); //connections that have exited
   
   while (game_active == 1){
+    pp_list = get_private_pipes();
     for (int i = 0;i<100;i++){
       char * pp = pp_list[i];
       if (pp != NULL){
-        for (int j = 0;j<100;j++){
-          if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
-            if (strcmp(pp_list[i],new_pp_list[j]) == 0){ //if the connection is new
-              // up semaphore
-              open_screen(pp);
-            }
-          }
-        }
+        printf("%s\n",pp);
+        game_active = 0;
+//        for (int j = 0;j<100;j++){
+//          if (strcmp(pp_list[i],disconnected_pp_list[j]) != 0){ //if not disconnected
+//            if (strcmp(pp_list[i],new_pp_list[j]) == 0){ //if the connection is new
+//              // up semaphore
+//              open_screen(pp);
+//            }
+//          }
+//        }
       }
     }
-    game_active = 0;
   }
   close_server(connector_pid);
   return 0;

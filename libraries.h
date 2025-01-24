@@ -18,6 +18,7 @@
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <fcntl.h>
 
 int err();
 struct player{

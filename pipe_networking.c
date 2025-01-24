@@ -15,8 +15,8 @@ int recieve_message(char*pipe_name,char*message){
     err();
   }
   int i = 0;
-  while (*(data+i) != '\0'){
-    write(e,(data+i),1);
+  while (*(message+i) != '\0'){
+    write(e,(message+i),1);
     i += 1;
   }
   close(e);

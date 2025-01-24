@@ -42,7 +42,7 @@ int listen_to_connections(int max_connections){
 
   fd_set read_fds;
 
-  char buff[1025]="";
+  char buff[19]=""; //newline later
   int address_ind = 0;
   
   int pid_index = 0;
@@ -80,6 +80,7 @@ int listen_to_connections(int max_connections){
       
       strcpy(pid_list[pid_index],buff);
       pid_index += 1;
+      store_private_pipe(buff);
       
       client_addresses[address_ind] = client_address;
       address_ind += 1;
@@ -122,9 +123,14 @@ int send_pp_name(char * pp_name){
 
   // Connect to the server
   if (connect(client_socket, server_address->ai_addr, server_address->ai_addrlen) == -1) {
-    printf("Connection failed\n");
+    printf("connection failed\n");
     close(client_socket);
-    err();
+    if (errno == 61){
+      printf("server not online\n");
+      exit(0);
+    }else{
+      err();
+    }
   }
 
   printf("connected to server\n");
@@ -143,6 +149,34 @@ int send_pp_name(char * pp_name){
   printf("connection closed\n");
   
   free(hints);
-  return ;
+  return 0;
 }
 
+void store_private_pipe(char* pp_name){
+  FILE * f = fopen("open_connections.dat","a");
+  fwrite(pp_name,strlen(pp_name),1,f);
+  fwrite("\n",sizeof(char),1,f);
+  fclose(f);
+}
+
+char ** get_private_pipes(){
+  char ** pp_list = (char **) calloc(sizeof(char*),100);
+  char * pp_name = (char *) calloc(sizeof(char),20);
+  
+  FILE * f = fopen("open_connections.dat","r");
+  char * buff = (char *) calloc(sizeof(char),2);
+  int bytes_read;
+  
+  bytes_read = fread(buff,sizeof(char),1,f);
+  int pp_index = 0;
+  while (bytes_read != 0){
+    int i = 0;
+    while (bytes_read != 0 && strcmp(buff,"\n") != 0){
+      pp_name[i] = buff[0];
+      i += 1;
+    }
+    pp_list[pp_index] = pp_name;
+  }
+  fclose(f);
+  return pp_list;
+}
